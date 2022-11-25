@@ -261,8 +261,8 @@ public class Board extends MouseAdapter {
         public Move doInBackground() {
             try {
                 Move m = getCurrentPlayer().move(new GameStatus(status));//, curPlayer); 
-                String info = "Profunditat màxima:" + m.getMaxDepthReached() + "\n";
-                info += "Node explorats:    " + m.getNumerOfNodesExplored();
+                String info = "Profunditat màxima: " + m.getMaxDepthReached() + "\n";
+                info += "Node explorats:  " + m.getNumerOfNodesExplored();
                 Board.this.controlPanel.setInfo(info);
                 hasMoved = true;
                 return m;
