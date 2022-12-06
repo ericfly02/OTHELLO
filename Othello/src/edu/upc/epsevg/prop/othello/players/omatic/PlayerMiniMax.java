@@ -50,18 +50,17 @@ public class PlayerMiniMax implements IPlayer, IAuto {
     */
     public int hCorners(GameStatus s){
         int corners = 0;
-        if(( s.getPos(0, 0) == jugador) || 
-            (s.getPos(0, 7) == jugador) || 
-            (s.getPos(7, 0) == jugador) || 
-            (s.getPos(7, 7) == jugador)){
-                corners++;
-        }
-        else if((s.getPos(0, 0) == CellType.opposite(jugador)) || 
-                (s.getPos(0, 7) == CellType.opposite(jugador)) || 
-                (s.getPos(7, 0) == CellType.opposite(jugador)) || 
-                (s.getPos(7, 7) == CellType.opposite(jugador))){
-                    corners--;
-                }
+        if(s.getPos(0, 0) == jugador) corners++;
+        else if(s.getPos(0, 0) == CellType.opposite(jugador)) corners--;
+        
+        if(s.getPos(0, 7) == jugador) corners++;
+        else if(s.getPos(0, 7) == CellType.opposite(jugador)) corners--;
+        
+        if(s.getPos(7, 0) == jugador) corners++;
+        else if(s.getPos(7, 0) == CellType.opposite(jugador)) corners--;
+        
+        if(s.getPos(7, 7) == jugador) corners++;
+        else if(s.getPos(7, 7) == CellType.opposite(jugador)) corners--;
                
         return 25*corners;
     }
@@ -139,7 +138,7 @@ public class PlayerMiniMax implements IPlayer, IAuto {
     * @param profunditat profunditat del arbre de jugades.
     */
     public int getHeuristica(GameStatus s){
-        return hCorners(s);//+s.getScore(jugador);
+        return hCorners(s)+s.getScore(jugador);
     }
 
     
@@ -156,10 +155,11 @@ public class PlayerMiniMax implements IPlayer, IAuto {
             return new Move(null, 0L, 0,  SearchType.MINIMAX); 
         } else {
             for (int i = 0; i < moves.size(); ++i){
+                System.out.println(" " + (moves.size()-i) + " movements left...");
                 GameStatus aux = new GameStatus(s);
                 aux.movePiece(moves.get(i)); //Cal fer una tirada auxiliar cada cop
                 int min = minValor(aux, alfa, beta, profunditat-1);
-                if (valor < min){
+                if (valor <= min){
                     moviment = moves.get(i);
                     valor = min;
                 }
@@ -172,6 +172,7 @@ public class PlayerMiniMax implements IPlayer, IAuto {
         } 
         //TODO:
         //Minimax: que retorni el moviment be (cal implementar saber quants nodes s'ha explorat i l'alçada).
+        System.out.println("Valor retornat: " + valor);   
         return new Move(moviment, nodesExplorats, 8, SearchType.MINIMAX);
     }
     
@@ -184,8 +185,15 @@ public class PlayerMiniMax implements IPlayer, IAuto {
     * @param profunditat profunditat del arbre de jugades.
     */
     public int maxValor(GameStatus s, int alfa, int beta, int profunditat){
-        if(s.checkGameOver())
-            return -MAX;
+        nodesExplorats++;
+        if(s.checkGameOver()){
+            if(s.getScore(jugador) > s.getScore(CellType.opposite(jugador)))
+                return MAX;
+            else 
+                //Si score(jugador) < score(oposat) o son iguals, considerem que hem perdut.
+                return -MAX;
+        }
+            
         if(profunditat > 0){
             Integer valor = -MAX-1;
             ArrayList<Point> moves =  s.getMoves();
@@ -201,7 +209,7 @@ public class PlayerMiniMax implements IPlayer, IAuto {
             return valor;
         }
         else{
-            nodesExplorats++;
+            //nodesExplorats++;
             return getHeuristica(s);
         }
         
@@ -215,8 +223,14 @@ public class PlayerMiniMax implements IPlayer, IAuto {
     * @param profunditat profunditat del arbre de jugades.
     */
     public int minValor(GameStatus s, int alfa, int beta, int profunditat){
-        if(s.checkGameOver())   
-            return MAX;
+        nodesExplorats++;
+        if(s.checkGameOver()){
+            if(s.getScore(jugador) > s.getScore(CellType.opposite(jugador)))
+                return -MAX;
+            else 
+                //Si score(jugador) < score(oposat) o son iguals, considerem que hem perdut.
+                return MAX;
+        }
         if(profunditat > 0){
             Integer valor = MAX-1;
             ArrayList<Point> moves =  s.getMoves();
@@ -231,8 +245,8 @@ public class PlayerMiniMax implements IPlayer, IAuto {
             }
             return valor;
         }
-        else{   //Si es fulla 
-            nodesExplorats++;
+        else{   //Si es fulla
+            //nodesExplorats++; 
             return getHeuristica(s);
         }
     }

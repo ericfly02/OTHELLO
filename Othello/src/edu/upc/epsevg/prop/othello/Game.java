@@ -27,8 +27,8 @@ public class Game {
                 
                 //IPlayer player1 = new RandomPlayer("Crazy Ivan");
                 //IPlayer player1 = new HumanPlayer("Human1");
-                IPlayer player1 = new DesdemonaPlayer(1);//GB
-                IPlayer player2 = new PlayerMiniMax(6);//GB
+                IPlayer player1 = new DesdemonaPlayer(30);//GB
+                IPlayer player2 = new PlayerMiniMax(8);//GB
 
                                 
                 new Board(player1 , player2, 2, false);
