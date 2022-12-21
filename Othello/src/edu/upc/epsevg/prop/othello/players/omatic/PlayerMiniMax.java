@@ -22,6 +22,7 @@ public class PlayerMiniMax implements IPlayer, IAuto {
     private long nodesExplorats;
     private CellType jugador;
     final private int MAX = 1000000;
+    private Random rand = new Random();
 
     public PlayerMiniMax(int profunditat) {
         this.profunditat = profunditat;
@@ -64,6 +65,7 @@ public class PlayerMiniMax implements IPlayer, IAuto {
 
         
                
+<<<<<<< Updated upstream
         return (int)(25*corners);//+(-12.5*adjacents));
     }
 
@@ -118,6 +120,141 @@ public class PlayerMiniMax implements IPlayer, IAuto {
         
         //System.out.println("Estabilitat: "+estabilitat);
         return (int)2*estabilitat;
+=======
+<<<<<<< HEAD
+        return (int)(50*corners);//+(-12.5*adjacents));
+=======
+        return (int)(25*corners);//+(-12.5*adjacents));
+>>>>>>> f38258d2abfe1123e6f7e54b49fb73ac93208df7
+>>>>>>> Stashed changes
+    }
+
+
+    /**
+    * Algorisme dissenyat de minmax amb poda alfa-beta. Retorna la posició on es millor tirar. Per aquesta heuristica tindrem en compte els seguents factors:  La mobilitat, l'estabilitat, les cantonades i la paritat de peces.
+    *
+    * @param t tauler sobre el qual fer el moviment
+    * @param profunditat profunditat del arbre de jugades.
+    */
+<<<<<<< Updated upstream
+    public int hMobilitat(GameStatus s){
+        return s.getMoves().size();
+=======
+    public int hParitat(GameStatus s){
+        // retornem la diferencia de peçes de l'oponent i les nostres
+        int paritat = s.getScore(jugador) - s.getScore(CellType.opposite(jugador));
+        //System.out.println("Paritat: "+ paritat);
+        return (int)0.5*paritat;
+    }
+
+    /**
+<<<<<<< HEAD
+     * @param s
+     * @return
+     */
+    public int hPeces(GameStatus s){
+        int V[][] =  {
+            {20, -3, 11, 8, 8, 11, -3, 20},
+            {-3, -7, -4, 1, 1, -4, -7, -3},
+            {11, -4, 2, 2, 2, 2, -4, 11},
+            {8, 1, 2, -3, -3, 2, 1, 8},
+            {8, 1, 2, -3, -3, 2, 1, 8},
+            {11, -4, 2, 2, 2, 2, -4, 11},
+            {-3, -7, -4, 1, 1, -4, -7, -3},
+            {20, -3, 11, 8, 8, 11, -3, 20}
+        };
+        int pond = 0;
+        for(int i = 0; i < s.getSize(); i++){
+            for(int j = 0; j < s.getSize(); j++){
+                if(s.getPos(i,j) == jugador){
+                    pond += V[i][j];
+                }
+                else if(s.getPos(i,j) == CellType.opposite(jugador)){
+                    pond -= V[i][j];
+=======
+    * Algorisme dissenyat de minmax amb poda alfa-beta. Retorna la posició on es millor tirar. Per aquesta heuristica tindrem en compte els seguents factors:  La mobilitat, l'estabilitat, les cantonades i la paritat de peces.
+    *
+    * @param t tauler sobre el qual fer el moviment
+    * @param profunditat profunditat del arbre de jugades.
+    */
+    public int hEstabilitat(GameStatus s){
+        // Check if the piece is stable in the horizontal direction
+        int estabilitat = 0;
+        for(int i = 0; i < s.getSize(); i++){
+            for(int j = 0; j < s.getSize(); j++){
+                if(s.getPos(i,j) == jugador){
+                    if ((j > 0 && s.getPos(i, j-1) == jugador) || (j < s.getSize()-1 && s.getPos(i, j+1) == jugador)) {
+                        estabilitat++;
+                    }
+                    // Check if the piece is stable in the vertical direction
+                    if ((i > 0 && s.getPos(i-1, j) == jugador) || (i < s.getSize()-1 && s.getPos(i+1, j) == jugador)) {
+                        estabilitat++;
+                    }
+
+                    // Check if the piece is stable in the diagonal direction
+                    if ((i > 0 && j > 0 && s.getPos(i-1, j-1) == jugador) || (i < s.getSize()-1 && j < s.getSize()-1 && s.getPos(i+1, j+1) == jugador)) {
+                        estabilitat++;
+                    }
+                    if ((i > 0 && j < s.getSize()-1 && s.getPos(i-1, j+1) == jugador) || (i < s.getSize()-1 && j > 0 && s.getPos(i+1, j-1) == jugador)) {
+                        estabilitat++;
+                    }
+>>>>>>> f38258d2abfe1123e6f7e54b49fb73ac93208df7
+                }
+            }
+        }
+
+<<<<<<< HEAD
+        return pond;
+>>>>>>> Stashed changes
+    }
+    /**
+    * Algorisme dissenyat de minmax amb poda alfa-beta. Retorna la posició on es millor tirar. Per aquesta heuristica tindrem en compte els seguents factors:  La mobilitat, l'estabilitat, les cantonades i la paritat de peces.
+    *
+    * @param t tauler sobre el qual fer el moviment
+    * @param profunditat profunditat del arbre de jugades.
+    */
+<<<<<<< Updated upstream
+    public int getHeuristica(GameStatus s){
+        return 2*hCorners(s)+hEstabilitat(s)+hParitat(s);
+=======
+    public int hEstabilitat(GameStatus s){
+        // Check if the piece is stable in the horizontal direction
+        int estabilitat = 0;
+        for(int i = 0; i < s.getSize(); i++){
+            for(int j = 0; j < s.getSize(); j++){
+                if(s.getPos(i,j) == jugador){
+                    if ((j > 0 && s.getPos(i, j-1) == jugador) || (j < s.getSize()-1 && s.getPos(i, j+1) == jugador)) {
+                        estabilitat++;
+                    }
+                    // Check if the piece is stable in the vertical direction
+                    if ((i > 0 && s.getPos(i-1, j) == jugador) || (i < s.getSize()-1 && s.getPos(i+1, j) == jugador)) {
+                        estabilitat++;
+                    }
+
+                    // Check if the piece is stable in the diagonal direction
+                    if ((i > 0 && j > 0 && s.getPos(i-1, j-1) == jugador) || (i < s.getSize()-1 && j < s.getSize()-1 && s.getPos(i+1, j+1) == jugador)) {
+                        estabilitat++;
+                    }
+                    if ((i > 0 && j < s.getSize()-1 && s.getPos(i-1, j+1) == jugador) || (i < s.getSize()-1 && j > 0 && s.getPos(i+1, j-1) == jugador)) {
+                        estabilitat++;
+                    }
+                }
+            }
+        }
+
+=======
+>>>>>>> f38258d2abfe1123e6f7e54b49fb73ac93208df7
+        // Increment the stability score if the piece is surrounded by many pieces of the same player
+        if (estabilitat >= 3) {
+            estabilitat++;
+        }
+        
+        //System.out.println("Estabilitat: "+estabilitat);
+<<<<<<< HEAD
+        return (int)1.5*estabilitat;
+=======
+        return (int)2*estabilitat;
+>>>>>>> f38258d2abfe1123e6f7e54b49fb73ac93208df7
     }
 
 
@@ -138,7 +275,26 @@ public class PlayerMiniMax implements IPlayer, IAuto {
     * @param profunditat profunditat del arbre de jugades.
     */
     public int getHeuristica(GameStatus s){
+<<<<<<< HEAD
+        int c = hCorners(s);
+        //int e = hEstabilitat(s);
+        int p = hParitat(s);
+        int m = hMobilitat(s);
+        int d = hPeces(s);
+        int tot = c+m+p+d;
+        if(rand.nextInt(500) == 0 && tot != 0){
+            System.out.println("Corners: " + c + " (" + (c*100)/tot + "%)");
+            System.out.println("Peces: " + d + " (" + (d*100)/tot + "%)");
+            //System.out.println("Estabilitat: " + e + " (" + (e*100)/tot + "%)");
+            System.out.println("Paritat: " + p + " (" + (p*100)/tot + "%)");
+            System.out.println("Mobilitat: " + m + " (" + (m*100)/tot + "%)");
+            System.out.println("Tot: "+tot+"\n");
+        }
+        return tot;//hCorners(s)+hEstabilitat(s)+hParitat(s)+hMobilitat(s);
+=======
         return 2*hCorners(s)+hEstabilitat(s)+hParitat(s);
+>>>>>>> f38258d2abfe1123e6f7e54b49fb73ac93208df7
+>>>>>>> Stashed changes
     }
 
 
@@ -231,10 +387,23 @@ public class PlayerMiniMax implements IPlayer, IAuto {
         nodesExplorats++;
         if(s.checkGameOver()){
             if(s.getScore(jugador) > s.getScore(CellType.opposite(jugador)))
+<<<<<<< Updated upstream
+=======
+<<<<<<< HEAD
+                return MAX;
+            else 
+                //Si score(jugador) < score(oposat) o son iguals, considerem que hem perdut.
+                return -MAX;
+=======
+>>>>>>> Stashed changes
                 return -MAX;
             else 
                 //Si score(jugador) < score(oposat) o son iguals, considerem que hem perdut.
                 return MAX;
+<<<<<<< Updated upstream
+=======
+>>>>>>> f38258d2abfe1123e6f7e54b49fb73ac93208df7
+>>>>>>> Stashed changes
         }
         if(profunditat > 0){
             Integer valor = MAX-1;
@@ -251,8 +420,28 @@ public class PlayerMiniMax implements IPlayer, IAuto {
             return valor;
         }
         else{   //Si es fulla
+<<<<<<< Updated upstream
             //nodesExplorats++; 
+=======
+<<<<<<< HEAD
+=======
+            //nodesExplorats++; 
+>>>>>>> f38258d2abfe1123e6f7e54b49fb73ac93208df7
+>>>>>>> Stashed changes
             return getHeuristica(s);
         }
     }
 }
+/*
+if(info.profunditatPendent >= node.profunditatPendent){
+    if(info.type == EXACTE){
+        return info.heuristica;
+    }
+    else if (info.type == PODA ALPHA) {
+        alpha = max(alpha, info.heuristica);
+    }
+    else{
+        beta = min(beta, info.heuristica);
+    }
+}
+*/
