@@ -48,75 +48,13 @@ public class PlayerID implements IPlayer, IAuto {
         this.jugador = s.getCurrentPlayer();
         return IDS(s);
     }
-<<<<<<< Updated upstream
     
     public Move IDS(GameStatus s){
         Move bestMove = null;
         int prof = 1;
         double startTime = System.currentTimeMillis();
         
-        while(!timeoutFlag){
-            System.out.println("** PROFUNDITAT " + prof + " **");
-            nodesExplorats = 0;
-            Move move = minMax(s, prof);
-            if(!timeoutFlag)
-                bestMove = move;
-            prof++;
-        }
-        double endTime = System.currentTimeMillis();
-        double time = (endTime - startTime)/1000.0;
-        System.out.println(time);
-
-        return bestMove;
-    }
-
-    public Move minMax(GameStatus s, int profunditat){
-        if(timeoutFlag)     //No ens importa el valor retornat. Només sortir lo més rapid del bucle
-            return null;
-        nodesExplorats = 0;
-        Integer valor = -MAX-1;                     // valor d'heuristica ha de començar el mes petit possible per a poder superarla facil
-        int alfa = -MAX;
-        int beta = MAX;
-        ArrayList<Point> moves =  s.getMoves();     // Llista de moviments
-        Point moviment = null;                      // Moviment que realitzarem;
-        if(moves.isEmpty()){
-            // no podem moure, el moviment (de tipus Point) es passa null.
-            return new Move(null, 0L, 0,  SearchType.MINIMAX); 
-        } else {
-            for (int i = 0; i < moves.size(); ++i){
-               //tem.out.println(" " + (moves.size()-i) + " movements left...");
-                GameStatus aux = new GameStatus(s);
-                aux.movePiece(moves.get(i)); //Cal fer una tirada auxiliar cada cop
-                int min = minValor(aux, alfa, beta, profunditat-1);
-                if (valor <= min){
-                    moviment = moves.get(i);
-                    valor = min;
-                }
-                if (beta < valor){
-                    break;
-                }
-                alfa = Math.max(valor,alfa);
-
-            }     
-        } 
-        //TODO:
-        //Minimax: que retorni el moviment be (cal implementar saber quants nodes s'ha explorat i l'alçada).
-       // System.out.println("Valor retornat: " + valor);   
-        return new Move(moviment, nodesExplorats, profunditat, SearchType.MINIMAX_IDS);
-    }
-    
-=======
-    
-    public Move IDS(GameStatus s){
-        Move bestMove = null;
-        int prof = 1;
-        double startTime = System.currentTimeMillis();
-        
-<<<<<<< HEAD
         while(!timeoutFlag && prof < 100){
-=======
-        while(!timeoutFlag){
->>>>>>> f38258d2abfe1123e6f7e54b49fb73ac93208df7
             System.out.println("** PROFUNDITAT " + prof + " **");
             nodesExplorats = 0;
             Move move = minMax(s, prof);
@@ -166,7 +104,6 @@ public class PlayerID implements IPlayer, IAuto {
         return new Move(moviment, nodesExplorats, profunditat, SearchType.MINIMAX_IDS);
     }
     
->>>>>>> Stashed changes
     /**
     * Funcio de suport per l'algoritme minmax creat.
     *
@@ -177,15 +114,7 @@ public class PlayerID implements IPlayer, IAuto {
     */
     public int maxValor(GameStatus s, int alfa, int beta, int profunditat){
         if(timeoutFlag)     //No ens importa el valor retornat. Només sortir lo més rapid del bucle
-<<<<<<< Updated upstream
-            return MAX*3;
-=======
-<<<<<<< HEAD
             return 0;
-=======
-            return MAX*3;
->>>>>>> f38258d2abfe1123e6f7e54b49fb73ac93208df7
->>>>>>> Stashed changes
         nodesExplorats++;
         if(s.checkGameOver()){
             if(s.getScore(jugador) > s.getScore(CellType.opposite(jugador)))
@@ -225,9 +154,6 @@ public class PlayerID implements IPlayer, IAuto {
     */
     public int minValor(GameStatus s, int alfa, int beta, int profunditat){
         if(timeoutFlag)     //No ens importa el valor retornat. Només sortir lo més rapid del bucle
-<<<<<<< Updated upstream
-=======
-<<<<<<< HEAD
             return 0;
         nodesExplorats++;
         if(s.checkGameOver()){
@@ -236,20 +162,6 @@ public class PlayerID implements IPlayer, IAuto {
             else 
                 //Si score(jugador) < score(oposat) o son iguals, considerem que hem perdut.
                 return -MAX;
-=======
->>>>>>> Stashed changes
-            return MAX*3;
-        nodesExplorats++;
-        if(s.checkGameOver()){
-            if(s.getScore(jugador) > s.getScore(CellType.opposite(jugador)))
-                return -MAX;
-            else 
-                //Si score(jugador) < score(oposat) o son iguals, considerem que hem perdut.
-                return MAX;
-<<<<<<< Updated upstream
-=======
->>>>>>> f38258d2abfe1123e6f7e54b49fb73ac93208df7
->>>>>>> Stashed changes
         }
         if(profunditat > 0){
             Integer valor = MAX-1;
@@ -309,9 +221,6 @@ public class PlayerID implements IPlayer, IAuto {
         return (int)0.5*paritat;
     }
 
-<<<<<<< Updated upstream
-=======
-<<<<<<< HEAD
     public int hPeces(GameStatus s){
         int V[][] =  {
             {20, -3, 11, 8, 8, 11, -3, 20},
@@ -338,9 +247,6 @@ public class PlayerID implements IPlayer, IAuto {
         return pond;
     }
 
-=======
->>>>>>> f38258d2abfe1123e6f7e54b49fb73ac93208df7
->>>>>>> Stashed changes
     /**
     * Algorisme dissenyat de minmax amb poda alfa-beta. Retorna la posició on es millor tirar. Per aquesta heuristica tindrem en compte els seguents factors:  La mobilitat, l'estabilitat, les cantonades i la paritat de peces.
     *
@@ -400,21 +306,9 @@ public class PlayerID implements IPlayer, IAuto {
     */
     public int getHeuristica(GameStatus s){
         if(!timeoutFlag)
-<<<<<<< Updated upstream
-            return hCorners(s)+hEstabilitat(s)+hParitat(s);
-        else 
-            return MAX*3;
-=======
-<<<<<<< HEAD
             return hCorners(s)+hPeces(s)+hMobilitat(s)+hParitat(s);
         else 
             return 0;
-=======
-            return hCorners(s)+hEstabilitat(s)+hParitat(s);
-        else 
-            return MAX*3;
->>>>>>> f38258d2abfe1123e6f7e54b49fb73ac93208df7
->>>>>>> Stashed changes
     }
     
 }
