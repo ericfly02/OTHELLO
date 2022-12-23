@@ -54,7 +54,7 @@ public class PlayerID implements IPlayer, IAuto {
         int prof = 1;
         double startTime = System.currentTimeMillis();
         
-        while(!timeoutFlag && prof < 100){
+        while(!timeoutFlag && prof < 60){
             System.out.println("** PROFUNDITAT " + prof + " **");
             nodesExplorats = 0;
             Move move = minMax(s, prof);

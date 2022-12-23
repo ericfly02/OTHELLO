@@ -62,8 +62,6 @@ public class PlayerMiniMax implements IPlayer, IAuto {
         
         if(s.getPos(7, 7) == jugador) corners++;
         else if(s.getPos(7, 7) == CellType.opposite(jugador)) corners--;
-
-        
                
         return (int)(50*corners);//+(-12.5*adjacents));
     }
@@ -78,7 +76,7 @@ public class PlayerMiniMax implements IPlayer, IAuto {
         // retornem la diferencia de peçes de l'oponent i les nostres
         int paritat = s.getScore(jugador) - s.getScore(CellType.opposite(jugador));
         //System.out.println("Paritat: "+ paritat);
-        return (int)0.5*paritat;
+        return (int)(0.5*paritat);
     }
 
     /**
@@ -110,44 +108,29 @@ public class PlayerMiniMax implements IPlayer, IAuto {
 
         return pond;
     }
+
     /**
     * Algorisme dissenyat de minmax amb poda alfa-beta. Retorna la posició on es millor tirar. Per aquesta heuristica tindrem en compte els seguents factors:  La mobilitat, l'estabilitat, les cantonades i la paritat de peces.
     *
     * @param t tauler sobre el qual fer el moviment
     * @param profunditat profunditat del arbre de jugades.
     */
-    public int hEstabilitat(GameStatus s){
+    public int hEdges(GameStatus s){
         // Check if the piece is stable in the horizontal direction
-        int estabilitat = 0;
+        int edges = 0;
         for(int i = 0; i < s.getSize(); i++){
             for(int j = 0; j < s.getSize(); j++){
                 if(s.getPos(i,j) == jugador){
-                    if ((j > 0 && s.getPos(i, j-1) == jugador) || (j < s.getSize()-1 && s.getPos(i, j+1) == jugador)) {
-                        estabilitat++;
-                    }
-                    // Check if the piece is stable in the vertical direction
-                    if ((i > 0 && s.getPos(i-1, j) == jugador) || (i < s.getSize()-1 && s.getPos(i+1, j) == jugador)) {
-                        estabilitat++;
-                    }
-
-                    // Check if the piece is stable in the diagonal direction
-                    if ((i > 0 && j > 0 && s.getPos(i-1, j-1) == jugador) || (i < s.getSize()-1 && j < s.getSize()-1 && s.getPos(i+1, j+1) == jugador)) {
-                        estabilitat++;
-                    }
-                    if ((i > 0 && j < s.getSize()-1 && s.getPos(i-1, j+1) == jugador) || (i < s.getSize()-1 && j > 0 && s.getPos(i+1, j-1) == jugador)) {
-                        estabilitat++;
+                    if (((i == 0 || i == 7) && (j > 0 && j < 7)) || ((j == 0 || j == 7) && (i > 0 && i < 7))) { 
+                       edges++; 
                     }
                 }
             }
         }
-
-        // Increment the stability score if the piece is surrounded by many pieces of the same player
-        if (estabilitat >= 3) {
-            estabilitat++;
-        }
+        
         
         //System.out.println("Estabilitat: "+estabilitat);
-        return (int)1.5*estabilitat;
+        return 10*edges;
     }
 
 
@@ -158,7 +141,7 @@ public class PlayerMiniMax implements IPlayer, IAuto {
     * @param profunditat profunditat del arbre de jugades.
     */
     public int hMobilitat(GameStatus s){
-        return s.getMoves().size();
+        return (int)(0.1*s.getMoves().size());
     }
     
     /**
@@ -172,16 +155,9 @@ public class PlayerMiniMax implements IPlayer, IAuto {
         //int e = hEstabilitat(s);
         int p = hParitat(s);
         int m = hMobilitat(s);
-        int d = hPeces(s);
-        int tot = c+m+p+d;
-        if(rand.nextInt(500) == 0 && tot != 0){
-            System.out.println("Corners: " + c + " (" + (c*100)/tot + "%)");
-            System.out.println("Peces: " + d + " (" + (d*100)/tot + "%)");
-            //System.out.println("Estabilitat: " + e + " (" + (e*100)/tot + "%)");
-            System.out.println("Paritat: " + p + " (" + (p*100)/tot + "%)");
-            System.out.println("Mobilitat: " + m + " (" + (m*100)/tot + "%)");
-            System.out.println("Tot: "+tot+"\n");
-        }
+        int e = hEdges(s);
+        int tot = c+p+m+e;
+        
         return tot;//hCorners(s)+hEstabilitat(s)+hParitat(s)+hMobilitat(s);
     }
 
@@ -286,6 +262,7 @@ public class PlayerMiniMax implements IPlayer, IAuto {
             for (int i = 0; i < moves.size(); ++i){
                 GameStatus aux = new GameStatus(s);
                 aux.movePiece(moves.get(i)); //Cal fer una tirada auxiliar cada cop
+                //de vegades retorna MAX-1 perque la funcio maxValor retorna MAX, per tant MAX-1 < MAX.
                 valor = Math.min(valor, maxValor(aux, alfa, beta, profunditat-1));
                 if (valor < alfa){
                     return valor; 

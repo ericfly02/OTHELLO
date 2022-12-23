@@ -3,21 +3,12 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-<<<<<<< Updated upstream
-            <file>file:/C:/Users/speed/Desktop/Uni/5e%20CUADRI/PROP/Laboratori/OTHELLO/Othello/src/edu/upc/epsevg/prop/othello/Game.java</file>
-            <file>file:/C:/Users/speed/Desktop/Uni/5e%20CUADRI/PROP/Laboratori/OTHELLO/Othello/src/edu/upc/epsevg/prop/othello/players/omatic/PlayerMiniMax.java</file>
-=======
-<<<<<<< HEAD
             <file>file:/C:/Users/ixcor/Desktop/Ixent/UNI/PROP/Proj-Othello/Othello/src/edu/upc/epsevg/prop/othello/Game.java</file>
             <file>file:/C:/Users/ixcor/Desktop/Ixent/UNI/PROP/Proj-Othello/Othello/src/edu/upc/epsevg/prop/othello/Board.java</file>
             <file>file:/C:/Users/ixcor/Desktop/Ixent/UNI/PROP/Proj-Othello/Othello/src/edu/upc/epsevg/prop/othello/ElMeuStatus.java</file>
+            <file>file:/C:/Users/ixcor/Desktop/Ixent/UNI/PROP/Proj-Othello/Othello/src/edu/upc/epsevg/prop/othello/players/omatic/TaulaTransposicions.java</file>
             <file>file:/C:/Users/ixcor/Desktop/Ixent/UNI/PROP/Proj-Othello/Othello/src/edu/upc/epsevg/prop/othello/players/omatic/PlayerMiniMax.java</file>
             <file>file:/C:/Users/ixcor/Desktop/Ixent/UNI/PROP/Proj-Othello/Othello/src/edu/upc/epsevg/prop/othello/players/omatic/PlayerID.java</file>
-=======
-            <file>file:/C:/Users/speed/Desktop/Uni/5e%20CUADRI/PROP/Laboratori/OTHELLO/Othello/src/edu/upc/epsevg/prop/othello/Game.java</file>
-            <file>file:/C:/Users/speed/Desktop/Uni/5e%20CUADRI/PROP/Laboratori/OTHELLO/Othello/src/edu/upc/epsevg/prop/othello/players/omatic/PlayerMiniMax.java</file>
->>>>>>> f38258d2abfe1123e6f7e54b49fb73ac93208df7
->>>>>>> Stashed changes
         </group>
     </open-files>
 </project-private>
