@@ -24,14 +24,14 @@ public class Game {
             @Override
             public void run() {
                 
-                IPlayer player1 = new PlayerMiniMax(7);
-
+                IPlayer player1 = new PlayerID();
+                //IPlayer player2 = new PlayerID();
                 //IPlayer player1 = new RandomPlayer("Crazy Ivan");
                 //IPlayer player1 = new HumanPlayer("Human1");
-                IPlayer player2 = new DesdemonaPlayer(1);//GB
+                IPlayer player2 = new DesdemonaPlayer(2);//GB
 
                                 
-                new Board(player2 , player1, 5, false);
+                new Board(player1 , player2, 1, false);
              }
         });
     }

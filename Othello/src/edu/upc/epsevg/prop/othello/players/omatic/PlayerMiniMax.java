@@ -22,7 +22,7 @@ public class PlayerMiniMax implements IPlayer, IAuto {
     private long nodesExplorats;
     private CellType jugador;
     final private int MAX = 1000000;
-    private Random rand = new Random();
+    //private Random rand = new Random();
 
     public PlayerMiniMax(int profunditat) {
         this.profunditat = profunditat;
@@ -76,7 +76,7 @@ public class PlayerMiniMax implements IPlayer, IAuto {
         // retornem la diferencia de peçes de l'oponent i les nostres
         int paritat = s.getScore(jugador) - s.getScore(CellType.opposite(jugador));
         //System.out.println("Paritat: "+ paritat);
-        return (int)(0.5*paritat);
+        return (int)(0.5*s.getScore(jugador));
     }
 
     /**
@@ -116,20 +116,17 @@ public class PlayerMiniMax implements IPlayer, IAuto {
     * @param profunditat profunditat del arbre de jugades.
     */
     public int hEdges(GameStatus s){
-        // Check if the piece is stable in the horizontal direction
         int edges = 0;
         for(int i = 0; i < s.getSize(); i++){
             for(int j = 0; j < s.getSize(); j++){
-                if(s.getPos(i,j) == jugador){
-                    if (((i == 0 || i == 7) && (j > 0 && j < 7)) || ((j == 0 || j == 7) && (i > 0 && i < 7))) { 
-                       edges++; 
-                    }
+                if (((i == 0 || i == 7) && (j > 0 && j < 7)) || ((j == 0 || j == 7) && (i > 0 && i < 7))) { 
+                    if(s.getPos(i,j) == jugador)
+                        edges++; 
+                    else if(s.getPos(i,j) == CellType.opposite(jugador))
+                        edges--;
                 }
             }
         }
-        
-        
-        //System.out.println("Estabilitat: "+estabilitat);
         return 10*edges;
     }
 
@@ -154,9 +151,9 @@ public class PlayerMiniMax implements IPlayer, IAuto {
         int c = hCorners(s);
         //int e = hEstabilitat(s);
         int p = hParitat(s);
-        int m = hMobilitat(s);
+        //int m = hMobilitat(s);
         int e = hEdges(s);
-        int tot = c+p+m+e;
+        int tot = c+p+e;
         
         return tot;//hCorners(s)+hEstabilitat(s)+hParitat(s)+hMobilitat(s);
     }
