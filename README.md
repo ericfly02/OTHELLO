@@ -73,11 +73,10 @@ Pel que fa a la nostra implementació no hem afegit el concepte de mobilitat en 
 <img width="920" alt="Othello - Eric i Ixent (5)" src="https://user-images.githubusercontent.com/20001491/209415685-8a8bb6ee-c695-4ced-b2ca-c0528c07193b.png">
 
 
+<br />
 
+## MiniMax i ID
 
+**MiniMax →** El mètode minMax és una implementació de l'algorisme Minimax, que és una tècnica utilitzada en jocs de dos jugadors per a determinar el millor moviment possible en cada torn. L'algorisme funciona avaluant totes les possibles jugades en un torn donat i seleccionant la jugada que maximitza la puntuació del jugador en el seu pròxim torn i minimitza la puntuació de l'oponent.
 
-
-
-
-
-
+**Iterative Deeping (ID) →** La tècnica IDS consisteix a realitzar una cerca en profunditat de manera iterativa, augmentant la profunditat en cada iteració fins que s'esgoti el temps de joc o es trobi una solució. En aquest cas, el mètode IDS és l'encarregat de realitzar aquesta cerca. Dins del mètode, s'utilitza un bucle per a anar augmentant la profunditat i cridant al mètode minMax amb cada profunditat. Si el temps de joc no s'esgota, el millor moviment trobat en cada iteració s'emmagatzema en la variable bestMove.
