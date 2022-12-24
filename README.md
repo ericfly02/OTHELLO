@@ -68,7 +68,7 @@ Per exemple, si el jugador actual té les caselles (0,0) i (7,7) i l'oponent té
 
 **MOBILITAT →** es refereix al nombre de moviments disponibles que té un jugador. Un jugador amb més mobilitat té més opcions per a fer moviments i voltejar les peces del seu oponent. No obstant això, també és important tenir en compte que donar a l'oponent massa opcions pot ser perjudicial per al jugador.
 
-Pel que fa a la nostra implementació no hem afegit el concepte de mobilitat en la ultima versió ja que vam notar que el resultat obtingut no era gaire eficient. Pero tot i aixi, mostrarem el seu funcionamen. La funció `hMobilitat()` en primer lloc, obte el tamany de la llista de moviments, `s.getMoves().size()`. El resultat obtingut el multipliquem per el seu pes corresponent que es 0.1
+La funció `hMobilitat()` en primer lloc, obte el tamany de la llista de moviments, `s.getMoves().size()`. El resultat obtingut el multipliquem per el seu pes corresponent que es 0.1
 
 <img width="920" alt="Othello - Eric i Ixent (5)" src="https://user-images.githubusercontent.com/20001491/209415685-8a8bb6ee-c695-4ced-b2ca-c0528c07193b.png">
 
