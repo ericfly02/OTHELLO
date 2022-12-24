@@ -76,7 +76,81 @@ Pel que fa a la nostra implementació no hem afegit el concepte de mobilitat en 
 <br />
 
 ## MiniMax i ID
+Els algorismes Minimax i Iterative Deepening són tècniques utilitzades en la intel·ligència artificial per a prendre decisions en jocs de taula com Othello. Aquests algorismes s'utilitzen per a avaluar diferents opcions de joc i seleccionar la que ofereixi la major probabilitat de guanyar. Per a realitzar aquesta pràctica, hem utilitzat els dos tipus d’algorismes per a poder observar quin és el més eficient. Seguidament es realitzara una petita introducció sobre el funcionament de cada algorisme, com l’hem aplicat a la pràctica, i finalment, una petita comparativa entre ambdós algorsimes. 
 
-**MiniMax →** El mètode minMax és una implementació de l'algorisme Minimax, que és una tècnica utilitzada en jocs de dos jugadors per a determinar el millor moviment possible en cada torn. L'algorisme funciona avaluant totes les possibles jugades en un torn donat i seleccionant la jugada que maximitza la puntuació del jugador en el seu pròxim torn i minimitza la puntuació de l'oponent.
+**MiniMax →** L'algorisme Minimax s'utilitza principalment per a prendre decisions en jocs de taula on dos jugadors competeixen entre si. L'objectiu d'aquest algorisme és avaluar totes les possibles combinacions de moviments de tots dos jugadors i seleccionar el que ofereixi el major valor per al jugador que l'està utilitzant.
 
-**Iterative Deeping (ID) →** La tècnica IDS consisteix a realitzar una cerca en profunditat de manera iterativa, augmentant la profunditat en cada iteració fins que s'esgoti el temps de joc o es trobi una solució. En aquest cas, el mètode IDS és l'encarregat de realitzar aquesta cerca. Dins del mètode, s'utilitza un bucle per a anar augmentant la profunditat i cridant al mètode minMax amb cada profunditat. Si el temps de joc no s'esgota, el millor moviment trobat en cada iteració s'emmagatzema en la variable bestMove.
+Per a entendre com funciona l'algorisme Minimax, és necessari entendre el concepte d'arbre de joc. Un arbre de joc és una representació gràfica de totes les possibles combinacions de moviments que poden realitzar-se en un joc. L'arbre de joc es construeix a partir de l'estat inicial del joc i s'estén a mesura que es realitzen moviments.
+
+L'algorisme Minimax explora l'arbre de joc complet i avalua cadascun dels estats finals possibles. Cada estat final s'assigna un valor de guany o pèrdua depenent de si el jugador que l'utilitza ha guanyat o perdut. L'algorisme Minimax llavors selecciona el moviment que ofereixi el major valor per al jugador que l'està utilitzant, tenint en compte els valors de guany o pèrdua dels estats finals possibles.
+
+Pel que es refereix a la implementació de l’algorisme MiniMax en la nostra pràctica, el que hem realitzat es un metode anomenat minMax(GameStatus s) . Aquest mètode reb com a paràmetre unicament el estat del joc actual. 
+
+L'algorisme funciona de la següent manera:
+
+    - Si s'aconsegueix la profunditat màxima o l'estat del joc és terminal, s'avalua l'estat del joc i es retorna el valor de l'heurística.
+    - Si és el torn del jugador, es busca el valor màxim entre tots els possibles moviments. Per a cada moviment, s'actualitza el valor de alpha i es diu recursivamente al mètode minmax amb els paràmetres actualitzats.
+    - Si és el torn de l'oponent, es busca el valor mínim entre tots els possibles moviments. Per a cada moviment, s'actualitza el valor de beta i es diu recursivamente al mètode minmax amb els paràmetres actualitzats.
+    
+<img width="920" alt="Othello - Eric i Ixent (2)" src="https://user-images.githubusercontent.com/20001491/209446247-8dc43169-b8d9-404f-8b6e-02cf7b27aaf9.png">
+
+
+**Iterative Deeping (ID) →** L'algorisme Iterative Deepening és una variant de l'algorisme Minimax que s'utilitza per a buscar solucions en arbres de joc de gran profunditat. En lloc d'explorar tot l'arbre de joc d'una sola vegada, l'algorisme Iterative Deepening explora l'arbre de manera incremental, augmentant la profunditat de cerca en cada iteració. Això permet que l'algorisme trobi solucions més ràpidament en arbres de joc de gran grandària.
+
+L'algorisme Iterative Deepening funciona de la següent manera:
+
+    - S'estableix un límit de profunditat inicial per a la cerca.
+    - Es realitza una cerca en profunditat fins a aconseguir el límit de profunditat establert.
+    - Si es troba una solució, es retorna immediatament. Si no es troba una solució, s'augmenta el límit de profunditat i es torna a realitzar la cerca en profunditat.
+    - Aquest procés es repeteix fins a trobar una solució o fins que s'esgoti el temps de cerca.
+
+L'algorisme Iterative Deepening s'utilitza sovint en jocs de taula com Othello per a trobar solucions de manera més eficient en arbres de joc de gran grandària. A més, també s'ha utilitzat en altres problemes de presa de decisions on és necessari buscar solucions en arbres de gran grandària.
+
+<img width="920" alt="Othello - Eric i Ixent (8)" src="https://user-images.githubusercontent.com/20001491/209446255-8afe6cef-98b0-465e-81fc-9d2aa8aaa220.png">
+
+**Comparativa →**
+
+<br />
+
+## Grafiques de numero de nivells baixats
+
+
+
+<br />
+
+## Estrategies d'optimització utilitzades
+Com en comentat en punts anteriors, per aquesta pràctica hem implementat tant l’algorisme MinMax com l’algorisme Iterative Deeping (ID). No obstant això, la complexitat d'aquests algorismes pot ser molt alta, especialment en jocs amb moltes opcions i una gran quantitat d'estats possibles. Per tant, és necessari utilitzar tècniques d'optimització per a fer que aquests algorismes siguin més eficients i ràpids. Algunes d'aquestes tècniques inclouen taules de transposició, zobrist hash i poda alfa beta.
+
+**Poda alfa-beta →** Per a l’algorisme MinMax, hem utilitzat un tipus d’optimització anomenat “poda alfa-beta”. Aquesta tècnica, s’utilitza per a reduir el temps de cerca en descartar ràpidament branques de l'arbre de cerca que no són prometedores. Això s'aconsegueix establint dos valors, alfa i beta, que representen el valor màxim i mínim, respectivament, que s'han trobat fins al moment en la cerca.
+
+Alpha representa el valor màxim que s'ha trobat fins al moment en la branca de l'arbre que està sent avaluada per l'agent MAX, mentre que beta representa el valor mínim que s'ha trobat fins al moment en la branca de l'arbre que està sent avaluada per l'agent MIN. A mesura que s'avança en la cerca, si es troba un valor major que alpha en la branca de l'agent MAX o un valor menor que beta en la branca de l'agent MIN, s'actualitza el valor de alpha o beta respectivament. Si en algun moment es troba que alpha és major o igual que beta, es talla la cerca en aquesta branca ja que se sap que el resultat final no serà millor que els valors trobats fins al moment.
+
+En el codi que es mostra seguidament. Si la profunditat màxima és 0 o l'estat del joc és terminal (és a dir, no hi ha més moviments possibles), es retorna el valor de l'heurística. En cas contrari, s'inicialitzen les variables alpha i beta amb els valors rebuts com a paràmetres i es crea una llista de moviments possibles a partir de l'estat actual del joc.
+
+
+A continuació, s'itera sobre la llista de moviments i es diu recursivamente a la funció `minMax()` per a cadascun d'ells, passant com a paràmetres l'estat del joc resultant de realitzar aquest moviment, la profunditat restant - 1 i els límits alpha i beta actualitzats en cada iteració. Si l'estat del joc és el torn del jugador Max, s'actualitza el valor de alpha amb el màxim entre alpha i el valor retornat per l'anomenada recursiva a `minMax()`. Si l'estat del joc és el torn del jugador Min, s'actualitza el valor de beta amb el mínim entre beta i el valor retornat per l'anomenada recursiva a `minMax()`.
+
+
+També es pot veure en la funció `minMax()` què es realitza una comparació entre alpha i beta, i si alpha és major o igual que beta es talla la cerca i es retorna el valor de alpha si s'està avaluant una branca de l'agent MAX o el valor de beta si s'està avaluant una branca de l'agent MIN.
+
+<img width="920" alt="Othello - Eric i Ixent (6)" src="https://user-images.githubusercontent.com/20001491/209446401-1781f131-b1d9-4dff-8d11-3cf9261d770d.png">
+
+<img width="920" alt="Othello - Eric i Ixent (7)" src="https://user-images.githubusercontent.com/20001491/209446404-160c1598-7886-45a8-a0cb-529a9d0892c2.png">
+
+
+**Poda Prob-Cut →** Un altre tipus d’optimització podria ser la poda Prob-Cut (no l’hem utilitzat en aquesta practica per falta de temps), la qual és una tècnica de poda utilitzada en l'algorisme MiniMax per a optimitzar la seva execució, y es similar a la poda alfa-beta que hem utilitzat en aquesta practica. Aquesta tècnica es basa en la probabilitat que el node actual sigui tallat per un node de major valor en l'arbre de cerca. Si la probabilitat que això ocorri és molt alta, llavors es pot tallar la cerca en aquest node per a estalviar temps de càlcul.
+
+Per a implementar aquesta poda en el codi minmax, el que hauriem de fer, es agregar una condició en el mètode minmax() que verifiqui si la probabilitat que el node actual sigui tallat per un node de major valor és prou alta. Si és així, es pot retornar el valor d'aquest node sense haver d'explorar més profundament en l'arbre de cerca. Això es pot fer comparant el valor del node actual amb el valor d'un node tallat prèviament per un node de major valor, i si el valor del node actual és menor que el valor del node tallat, llavors es pot retornar el valor del node actual sense explorar més profundament en l'arbre de cerca.
+
+
+**Zobrist Hashing i Taules de Transposició →** El mètode zobristhash s'utilitza per a calcular una "clau hash" de l'estat actual del tauler de joc. Aquesta clau hash s'utilitza per a emmagatzemar l'estat del tauler en una taula de transposicions i evitar haver de tornar a calcular el valor d'un estat del tauler que ja ha estat avaluat prèviament. Això permet una major eficiència en la cerca, ja que evita haver de tornar a explorar estats del joc que ja han estat avaluats.
+
+La taula de transposició és una tècnica utilitzada per a emmagatzemar i recuperar ràpidament els resultats de subproblemes que s'hagin resolt prèviament. Això permet evitar haver de tornar a calcular subproblemes que ja s'hagin resolt anteriorment i, per tant, redueix la complexitat de l'algorisme.
+
+
+
+
+
+
+
+
